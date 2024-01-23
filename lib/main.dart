@@ -1,34 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:state_management_basics/pages/homepage.dart';
+import 'package:state_management_basics/widgets/new_contact_view.dart';
 
 void main() {
-  runApp(const ContactBook());
+  runApp(const ContactsApp());
 }
 
-class ContactBook extends StatelessWidget {
-  const ContactBook({super.key});
+class ContactsApp extends StatelessWidget {
+  const ContactsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const HomePage();
-  }
-}
-
-class Contact {
-  final String name;
-
-  const Contact({required this.name});
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contact Book'),
-        centerTitle: true,
-      ),
+    return MaterialApp(
+      title: 'Contact Book',
+      theme: ThemeData.dark(),
+      home: const HomePage(),
+      routes: {
+        '/new-contact': (context) => const NewContactView(),
+      },
     );
   }
 }
