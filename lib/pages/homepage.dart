@@ -13,12 +13,28 @@ class HomePage extends StatelessWidget {
         title: const Text('Contact Book'),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: contactBook.length,
-        itemBuilder: (context, index) {
-          final contact = contactBook.contact(atIndex: index);
-          return ListTile(
-            title: Text(contact!.name),
+      body: ValueListenableBuilder(
+        valueListenable: contactBook,
+        builder: (context, value, child) {
+          final contacts = value;
+          return ListView.builder(
+            itemCount: contacts.length,
+            itemBuilder: (context, index) {
+              final contact = contacts[index];
+              return Dismissible(
+                onDismissed: (direction) {
+                  contactBook.remove(
+                      contact: contactBook.contact(atIndex: index)!);
+                },
+                key: ValueKey(contact.id),
+                child: Material(
+                  elevation: 6,
+                  child: ListTile(
+                    title: Text(contact.name),
+                  ),
+                ),
+              );
+            },
           );
         },
       ),
